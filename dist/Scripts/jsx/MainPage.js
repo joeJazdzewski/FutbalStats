@@ -17,12 +17,31 @@ var MainPage = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this, props));
 
         _this.state = {
-            data: Immutable.Map({ "a": 50 })
+            data: Immutable.Map({ "a": 50 }),
+            leagues: []
         };
         return _this;
     }
 
     _createClass(MainPage, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            $.Request({
+                url: "https://sportsop-soccer-sports-open-data-v1.p.mashape.com/v1/leagues",
+
+                headers: [{ header: "x-mashape-key", value: keys.openSport.key }],
+                success: function success(response) {
+                    _this2.setState({ leagues: response.data.leagues });
+                },
+                fail: function fail(f) {
+                    console.log(f);
+                },
+                type: "GET"
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return React.createElement(
@@ -40,7 +59,22 @@ var MainPage = function (_React$Component) {
                     React.createElement(
                         "p",
                         null,
-                        "The place to get the most api based football stats"
+                        "The place to get the most api based football stats. This site has data for the following leagues."
+                    ),
+                    React.createElement(
+                        "div",
+                        null,
+                        this.state.leagues.map(function (ele) {
+                            return React.createElement(
+                                "div",
+                                null,
+                                React.createElement(
+                                    "b",
+                                    null,
+                                    ele.name
+                                )
+                            );
+                        })
                     )
                 )
             );

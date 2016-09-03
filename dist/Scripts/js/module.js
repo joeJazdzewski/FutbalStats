@@ -31096,12 +31096,12 @@ module.exports = function (str) {
 arguments[4][45][0].apply(exports,arguments)
 },{"_process":50,"dup":45}],236:[function(require,module,exports){
 root = { 
-    React : require('react'),
-    ReactDOM : require('react-dom'),
-    Immutable : require('immutable'),
+    React: require('react'),
+    ReactDOM: require('react-dom'),
+    Immutable: require('immutable'),
     Router: require('react-router').Router,
     Route: require('react-router').Route,
-    Link:  require('react-router').Link,
+    Link: require('react-router').Link,
     browserHistory: require('react-router').browserHistory,
 };
 
