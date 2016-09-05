@@ -17,7 +17,8 @@ class Menu extends React.Component{
                     </div>
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                        <li role="presentation"><a href="/dist/">Home</a></li>
+                            <li role="presentation"><a href="/dist/">Home</a></li>
+                            <li role="presentation"><a href="/seasons/">Seasons</a></li>
                         </ul>
                     </div>
                 </div>

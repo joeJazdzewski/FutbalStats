@@ -23,7 +23,8 @@ var SiteRouter = function (_React$Component) {
             return React.createElement(
                 Router,
                 { history: browserHistory },
-                React.createElement(Route, { path: "/dist/", component: MainPage })
+                React.createElement(Route, { path: "/dist/", component: MainPage }),
+                React.createElement(Route, { path: "/seasons/", component: SeasonsByLeague })
             );
         }
     }]);

@@ -61,6 +61,15 @@ var Menu = function (_React$Component) {
                                     { href: "/dist/" },
                                     "Home"
                                 )
+                            ),
+                            React.createElement(
+                                "li",
+                                { role: "presentation" },
+                                React.createElement(
+                                    "a",
+                                    { href: "/seasons/" },
+                                    "Seasons"
+                                )
                             )
                         )
                     )

@@ -8,46 +8,33 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MainPage = function (_React$Component) {
-    _inherits(MainPage, _React$Component);
+var SeasonsByLeague = function (_React$Component) {
+    _inherits(SeasonsByLeague, _React$Component);
 
-    function MainPage(props) {
-        _classCallCheck(this, MainPage);
+    function SeasonsByLeague(props) {
+        _classCallCheck(this, SeasonsByLeague);
 
-        var _this = _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (SeasonsByLeague.__proto__ || Object.getPrototypeOf(SeasonsByLeague)).call(this, props));
 
-        _this.state = {
-            data: Immutable.Map({ "a": 50 }),
-            leagues: ds.store.get("leagues") || []
-        };
-        _this.setState = _this.setState.bind(_this);
+        _this.state = {};
         return _this;
     }
 
-    _createClass(MainPage, [{
+    _createClass(SeasonsByLeague, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            if (!ds.hasKey("leagues")) {
-                ds.addListener("MainPage", this.setState);
-                $.Request({
-                    url: "https://sportsop-soccer-sports-open-data-v1.p.mashape.com/v1/leagues",
-
-                    headers: [{ header: "x-mashape-key", value: keys.openSport.key }],
-                    success: function success(response) {
-                        ds.addToStore("leagues", Immutable.List(response.data.leagues));
-                    },
-                    fail: function fail(f) {
-                        console.log(f);
-                    },
-                    type: "GET"
-                });
-            }
+            $.Request({
+                url: "",
+                headers: [{ header: "", value: "" }],
+                success: function success(response) {},
+                fail: function fail(response) {
+                    console.log(response);
+                }
+            });
         }
     }, {
-        key: "componentWillUnmount",
-        value: function componentWillUnmount() {
-            ds.removeListener("MainPage");
-        }
+        key: "handleLeagueChange",
+        value: function handleLeagueChange(e) {}
     }, {
         key: "render",
         value: function render() {
@@ -59,27 +46,13 @@ var MainPage = function (_React$Component) {
                     "div",
                     { className: "container" },
                     React.createElement(
-                        "h2",
-                        null,
-                        "Futbol Stats"
-                    ),
-                    React.createElement(
-                        "p",
-                        null,
-                        "The place to get the most api based football stats. This site has data for the following leagues."
-                    ),
-                    React.createElement(
-                        "div",
-                        null,
+                        "select",
+                        { ref: "leagues", className: "form-control", onChange: this.handleLeagueChange },
                         this.state.leagues.map(function (ele) {
                             return React.createElement(
-                                "div",
-                                null,
-                                React.createElement(
-                                    "b",
-                                    null,
-                                    ele.name
-                                )
+                                "option",
+                                { val: ele.league_slug },
+                                ele.name
                             );
                         })
                     )
@@ -88,5 +61,5 @@ var MainPage = function (_React$Component) {
         }
     }]);
 
-    return MainPage;
+    return SeasonsByLeague;
 }(React.Component);
