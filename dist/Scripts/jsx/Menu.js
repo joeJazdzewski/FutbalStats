@@ -57,8 +57,8 @@ var Menu = function (_React$Component) {
                                 "li",
                                 { role: "presentation" },
                                 React.createElement(
-                                    "a",
-                                    { href: "/dist/" },
+                                    Link,
+                                    { to: "/dist/" },
                                     "Home"
                                 )
                             ),
@@ -66,9 +66,9 @@ var Menu = function (_React$Component) {
                                 "li",
                                 { role: "presentation" },
                                 React.createElement(
-                                    "a",
-                                    { href: "/seasons/" },
-                                    "Seasons"
+                                    Link,
+                                    { to: "/dist/topscorer" },
+                                    "Top Scorers"
                                 )
                             )
                         )

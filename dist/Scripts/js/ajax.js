@@ -60,14 +60,14 @@ var Ajax = function () {
 
 			for (var ele in params.data) {
 				query += ele + params.data[ele] + "&";
-			}if (params.type == "GET") {
+			}if (params.type.toUpperCase() == "GET") {
 				var newUrl = !!query ? params.url + "?" + query : params.url;
 				xhr.open("GET", newUrl, false);
 				params.headers.forEach(function (ele) {
 					xhr.setRequestHeader(ele.header, ele.value);
 				});
 				xhr.send();
-			} else if (params.type.toUpper() == "POST") {
+			} else if (params.type.toUpperCase() == "POST") {
 				xhr.open("POST", params.url, false);
 				params.headers.forEach(function (ele) {
 					xhr.setRequestHeader(ele.header, ele.value);

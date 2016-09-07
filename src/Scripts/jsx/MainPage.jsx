@@ -9,21 +9,8 @@ class MainPage extends React.Component{
     }
     componentDidMount(){
         if(!ds.hasKey("leagues")) {
-            ds.addListener("MainPage", this.setState);
-            $.Request({
-                url:"https://sportsop-soccer-sports-open-data-v1.p.mashape.com/v1/leagues", 
-                
-                headers:[
-                    {header: "x-mashape-key", value: keys.openSport.key}
-                ],
-                success: (response) => {
-                    ds.addToStore("leagues", Immutable.List(response.data.leagues));
-                },
-                fail: (f) => {
-                    console.log(f);
-                }, 
-                type: "GET" 
-            });
+            ds.updateListener("MainPage", this.setState);
+            new DataAccess().requestLeagues();
         }
     }
     componentWillUnmount() {

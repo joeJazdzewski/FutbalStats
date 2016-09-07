@@ -8,29 +8,31 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SeasonsByLeague = function (_React$Component) {
-    _inherits(SeasonsByLeague, _React$Component);
+var TopScorer = function (_React$Component) {
+    _inherits(TopScorer, _React$Component);
 
-    function SeasonsByLeague(props) {
-        _classCallCheck(this, SeasonsByLeague);
+    function TopScorer(props) {
+        _classCallCheck(this, TopScorer);
 
-        var _this = _possibleConstructorReturn(this, (SeasonsByLeague.__proto__ || Object.getPrototypeOf(SeasonsByLeague)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (TopScorer.__proto__ || Object.getPrototypeOf(TopScorer)).call(this, props));
 
         _this.state = {
             leagues: ds.store.get("leagues") || new Immutable.List(),
             seasons: ds.store.get("seasons") || new Immutable.Map(),
             seas: ds.store.get("seasons"),
             curSeason: "",
-            curLeague: ""
+            curLeague: "",
+            curScorers: new Immutable.List()
         };
         _this.setState = _this.setState.bind(_this);
         _this.handleLeagueChange = _this.handleLeagueChange.bind(_this);
         _this.handleSeasonChange = _this.handleSeasonChange.bind(_this);
         _this.dataStoreUpdate = _this.dataStoreUpdate.bind(_this);
+        _this.handleClick = _this.handleClick.bind(_this);
         return _this;
     }
 
-    _createClass(SeasonsByLeague, [{
+    _createClass(TopScorer, [{
         key: "componentDidMount",
         value: function componentDidMount() {
             var da = new DataAccess();
@@ -50,15 +52,24 @@ var SeasonsByLeague = function (_React$Component) {
             var da = new DataAccess();
             da.requestSeasons(e.target.value);
             this.setState({
-                curLeague: e.target.value
+                curLeague: e.target.value,
+                curSeason: "",
+                curScorers: new Immutable.List()
             });
         }
     }, {
         key: "handleSeasonChange",
         value: function handleSeasonChange(e) {
             this.setState({
-                curSeason: e.target.value
+                curSeason: e.target.value,
+                curScorers: new Immutable.List()
             });
+        }
+    }, {
+        key: "handleClick",
+        value: function handleClick() {
+            var da = new DataAccess();
+            da.requestTopScorer(this.state.curLeague, this.state.curSeason);
         }
     }, {
         key: "render",
@@ -101,11 +112,65 @@ var SeasonsByLeague = function (_React$Component) {
                                 ele.name
                             );
                         })
+                    ),
+                    this.state.seasons.size > 0 && this.state.curLeague && React.createElement(
+                        "button",
+                        { className: "btn btn-primary", onClick: this.handleClick },
+                        "Search"
+                    ),
+                    React.createElement(
+                        "div",
+                        null,
+                        this.state.curScorers.size != 0 && React.createElement(
+                            "div",
+                            null,
+                            this.state.curScorers.map(function (ele) {
+                                return React.createElement(
+                                    "div",
+                                    null,
+                                    React.createElement(
+                                        "h2",
+                                        null,
+                                        ele.fullname
+                                    ),
+                                    React.createElement(
+                                        "b",
+                                        null,
+                                        "Nationality: ",
+                                        ele.nationality
+                                    ),
+                                    React.createElement(
+                                        "b",
+                                        null,
+                                        "Number:  ",
+                                        ele.number
+                                    ),
+                                    React.createElement(
+                                        "b",
+                                        null,
+                                        "Goals: ",
+                                        ele.goals
+                                    ),
+                                    React.createElement(
+                                        "b",
+                                        null,
+                                        "Num of Matches: ",
+                                        ele.matches
+                                    ),
+                                    React.createElement(
+                                        "b",
+                                        null,
+                                        "Team: ",
+                                        ele.team
+                                    )
+                                );
+                            })
+                        )
                     )
                 )
             );
         }
     }]);
 
-    return SeasonsByLeague;
+    return TopScorer;
 }(React.Component);

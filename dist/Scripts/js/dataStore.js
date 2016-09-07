@@ -11,15 +11,13 @@ var DataStore = function () {
         this.store = new Immutable.Map();
         this.listeners = new Immutable.Map();
         this.history = new Immutable.List();
-
-        this.addToStore = this.addToStore.bind(this);
     }
 
     _createClass(DataStore, [{
-        key: "addToStore",
-        value: function addToStore(key, value) {
+        key: "updateStore",
+        value: function updateStore(key, value) {
             var hashSet = { key: key, value: value };
-            this.history.push(this.store);
+            this.history = this.history.push(this.store);
             this.store = this.store.set(key, value);
             this.listeners.map(function (func) {
                 var obj = {};
@@ -28,16 +26,9 @@ var DataStore = function () {
             });
         }
     }, {
-        key: "updateStore",
-        value: function updateStore(key, value) {
-            var hashSet = { key: key, value: value };
-            this.history.push(this.store);
-            this.store = this.store.update(key, value);
-            this.listeners.map(function (func) {
-                var obj = {};
-                obj[key] = value;
-                func(obj);
-            });
+        key: "getFromStore",
+        value: function getFromStore(key) {
+            return this.store.get(key);
         }
     }, {
         key: "hasKey",
@@ -50,15 +41,9 @@ var DataStore = function () {
             this.store = this.store.delete(key);
         }
     }, {
-        key: "addListener",
-        value: function addListener(key, listener) {
-            this.listeners = this.listeners.set(key, listener);
-        }
-    }, {
         key: "updateListener",
         value: function updateListener(key, listener) {
-            var hashSet = { key: key, value: listener };
-            this.listeners = this.listeners.update(key, listener);
+            this.listeners = this.listeners.set(key, listener);
         }
     }, {
         key: "removeListener",
