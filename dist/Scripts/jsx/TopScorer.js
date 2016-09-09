@@ -22,7 +22,7 @@ var TopScorer = function (_React$Component) {
             seas: ds.store.get("seasons"),
             curSeason: "",
             curLeague: "",
-            curScorers: new Immutable.List()
+            topScorers: new Immutable.Map()
         };
         _this.setState = _this.setState.bind(_this);
         _this.handleLeagueChange = _this.handleLeagueChange.bind(_this);
@@ -54,15 +54,14 @@ var TopScorer = function (_React$Component) {
             this.setState({
                 curLeague: e.target.value,
                 curSeason: "",
-                curScorers: new Immutable.List()
+                topScorers: new Immutable.Map()
             });
         }
     }, {
         key: "handleSeasonChange",
         value: function handleSeasonChange(e) {
             this.setState({
-                curSeason: e.target.value,
-                curScorers: new Immutable.List()
+                curSeason: e.target.value
             });
         }
     }, {
@@ -74,6 +73,8 @@ var TopScorer = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var key = this.state.curLeague + "-" + this.state.curSeason;
+            var list = this.state.topScorers.get(key);
             return React.createElement(
                 "div",
                 null,
@@ -121,10 +122,10 @@ var TopScorer = function (_React$Component) {
                     React.createElement(
                         "div",
                         null,
-                        this.state.curScorers.size != 0 && React.createElement(
+                        this.state.topScorers.size != 0 && React.createElement(
                             "div",
                             null,
-                            this.state.curScorers.map(function (ele) {
+                            list.map(function (ele) {
                                 return React.createElement(
                                     "div",
                                     null,

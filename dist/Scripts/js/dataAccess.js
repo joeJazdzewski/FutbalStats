@@ -62,7 +62,7 @@ var DataAccess = function () {
                 success: function success(response) {
                     if (!ds.hasKey("topScorers")) ds.updateStore("topScorers", new Immutable.Map());
                     var scorers = ds.getFromStore("topScorers");
-                    scorers = scorers.set(league_slug, new Immutable.List(response.data.topscorers));
+                    scorers = scorers.set(league_slug + "-" + season_slug, new Immutable.List(response.data.topscorers));
                     ds.updateStore("topScorers", scorers);
                 },
                 fail: that.fail,

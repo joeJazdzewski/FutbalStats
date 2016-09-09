@@ -7,7 +7,7 @@ class TopScorer extends React.Component {
             seas: ds.store.get("seasons"),
             curSeason: "",
             curLeague: "",
-            curScorers: new Immutable.List()
+            topScorers: new Immutable.Map()
         };
         this.setState = this.setState.bind(this);
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
@@ -31,13 +31,12 @@ class TopScorer extends React.Component {
         this.setState({
              curLeague: e.target.value,
              curSeason: "",
-             curScorers: new Immutable.List()
+             topScorers: new Immutable.Map()
         });
     }
     handleSeasonChange(e){
         this.setState({
             curSeason: e.target.value,
-            curScorers: new Immutable.List()
         });
     }
     handleClick(){
@@ -45,6 +44,8 @@ class TopScorer extends React.Component {
         da.requestTopScorer(this.state.curLeague, this.state.curSeason);
     }
     render(){
+        var key =(this.state.curLeague + "-" + this.state.curSeason);
+        var list = this.state.topScorers.get(key);
         return(
             <div>
                 <Menu />
@@ -78,18 +79,18 @@ class TopScorer extends React.Component {
                     }
                     <div>
                         {
-                            this.state.curScorers.size != 0 &&
+                            this.state.topScorers.size != 0 &&
                             <div>
                                 {
-                                    this.state.curScorers.map((ele) => {
+                                    list.map((ele) => {
                                         return(
                                             <div>
                                                 <h2>{ele.fullname}</h2>
-                                                <b>Nationality: {ele.nationality}</b>
-                                                <b>Number:  {ele.number}</b>
-                                                <b>Goals: {ele.goals}</b>
-                                                <b>Num of Matches: {ele.matches}</b>
-                                                <b>Team: {ele.team}</b>
+                                                <b>Nationality: {ele.nationality}</b><br/>
+                                                <b>Number:  {ele.number}</b><br/>
+                                                <b>Goals: {ele.goals}</b><br/>
+                                                <b>Num of Matches: {ele.matches}</b><br/>
+                                                <b>Team: {ele.team}</b><br/><br/>
                                             </div>
                                         )
                                     })
