@@ -69,6 +69,23 @@ var DataAccess = function () {
                 type: that.types.get
             });
         }
+    }, {
+        key: "requestTeams",
+        value: function requestTeams(league_slug, season_slug) {
+            var that = this;
+            $.Request({
+                url: that.baseUrl + "/" + league_slug + "/seasons/" + season_slug + "/teams",
+                headers: that.headers,
+                success: function success(response) {
+                    if (!ds.hasKey("teams")) ds.updateStore("teams", new Immutable.Map());
+                    var teams = ds.getFromStore("teams");
+                    teams = teams.set(league_slug + "-" + season_slug, new Immutable.List(response.data.teams));
+                    ds.updateStore("teams", teams);
+                },
+                fail: that.fail,
+                type: that.types.get
+            });
+        }
     }]);
 
     return DataAccess;

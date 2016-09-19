@@ -24,7 +24,8 @@ var SiteRouter = function (_React$Component) {
                 Router,
                 { history: browserHistory },
                 React.createElement(Route, { path: "/dist/", component: MainPage }),
-                React.createElement(Route, { path: "/dist/topScorer", component: TopScorer })
+                React.createElement(Route, { path: "/dist/topScorer", component: TopScorer }),
+                React.createElement(Route, { path: "/dist/teams", component: Teams })
             );
         }
     }]);

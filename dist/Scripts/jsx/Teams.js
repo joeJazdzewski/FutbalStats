@@ -8,21 +8,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var TopScorer = function (_React$Component) {
-    _inherits(TopScorer, _React$Component);
+var Teams = function (_React$Component) {
+    _inherits(Teams, _React$Component);
 
-    function TopScorer(props) {
-        _classCallCheck(this, TopScorer);
+    function Teams(props) {
+        _classCallCheck(this, Teams);
 
-        var _this = _possibleConstructorReturn(this, (TopScorer.__proto__ || Object.getPrototypeOf(TopScorer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Teams.__proto__ || Object.getPrototypeOf(Teams)).call(this, props));
 
         _this.state = {
             leagues: ds.store.get("leagues") || new Immutable.List(),
             seasons: ds.store.get("seasons") || new Immutable.Map(),
-            seas: ds.store.get("seasons"),
             curSeason: "",
             curLeague: "",
-            topScorers: new Immutable.Map()
+            teams: new Immutable.Map()
         };
         _this.setState = _this.setState.bind(_this);
         _this.handleLeagueChange = _this.handleLeagueChange.bind(_this);
@@ -32,7 +31,7 @@ var TopScorer = function (_React$Component) {
         return _this;
     }
 
-    _createClass(TopScorer, [{
+    _createClass(Teams, [{
         key: "componentDidMount",
         value: function componentDidMount() {
             var da = new DataAccess();
@@ -54,7 +53,7 @@ var TopScorer = function (_React$Component) {
             this.setState({
                 curLeague: e.target.value,
                 curSeason: "",
-                topScorers: new Immutable.Map()
+                teams: new Immutable.Map()
             });
         }
     }, {
@@ -68,13 +67,13 @@ var TopScorer = function (_React$Component) {
         key: "handleClick",
         value: function handleClick() {
             var da = new DataAccess();
-            da.requestTopScorer(this.state.curLeague, this.state.curSeason);
+            da.requestTeams(this.state.curLeague, this.state.curSeason);
         }
     }, {
         key: "render",
         value: function render() {
             var key = this.state.curLeague + "-" + this.state.curSeason;
-            var list = this.state.topScorers.get(key);
+            var list = this.state.teams.get(key);
             return React.createElement(
                 "div",
                 null,
@@ -122,7 +121,7 @@ var TopScorer = function (_React$Component) {
                     React.createElement(
                         "div",
                         null,
-                        this.state.topScorers.size != 0 && React.createElement(
+                        this.state.teams.size != 0 && React.createElement(
                             "div",
                             null,
                             list.map(function (ele) {
@@ -132,44 +131,8 @@ var TopScorer = function (_React$Component) {
                                     React.createElement(
                                         "h2",
                                         null,
-                                        ele.fullname
-                                    ),
-                                    React.createElement(
-                                        "b",
-                                        null,
-                                        "Nationality: ",
-                                        ele.nationality
-                                    ),
-                                    React.createElement("br", null),
-                                    React.createElement(
-                                        "b",
-                                        null,
-                                        "Number:  ",
-                                        ele.number
-                                    ),
-                                    React.createElement("br", null),
-                                    React.createElement(
-                                        "b",
-                                        null,
-                                        "Goals: ",
-                                        ele.goals
-                                    ),
-                                    React.createElement("br", null),
-                                    React.createElement(
-                                        "b",
-                                        null,
-                                        "Num of Matches: ",
-                                        ele.matches
-                                    ),
-                                    React.createElement("br", null),
-                                    React.createElement(
-                                        "b",
-                                        null,
-                                        "Team: ",
-                                        ele.team
-                                    ),
-                                    React.createElement("br", null),
-                                    React.createElement("br", null)
+                                        ele.name
+                                    )
                                 );
                             })
                         )
@@ -179,5 +142,5 @@ var TopScorer = function (_React$Component) {
         }
     }]);
 
-    return TopScorer;
+    return Teams;
 }(React.Component);

@@ -70,6 +70,15 @@ var Menu = function (_React$Component) {
                                     { to: "/dist/topscorer" },
                                     "Top Scorers"
                                 )
+                            ),
+                            React.createElement(
+                                "li",
+                                { role: "presentation" },
+                                React.createElement(
+                                    Link,
+                                    { to: "/dist/teams" },
+                                    "Teams"
+                                )
                             )
                         )
                     )

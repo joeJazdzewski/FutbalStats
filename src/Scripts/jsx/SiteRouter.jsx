@@ -7,6 +7,7 @@ class SiteRouter extends React.Component{
             <Router history={browserHistory}>
                 <Route path="/dist/" component={MainPage} />
                 <Route path="/dist/topScorer" component={TopScorer} />
+                <Route path="/dist/teams" component={Teams} />
             </Router>
         );
     }

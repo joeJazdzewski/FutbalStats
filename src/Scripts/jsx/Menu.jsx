@@ -19,6 +19,7 @@ class Menu extends React.Component{
                         <ul className="nav navbar-nav">
                             <li role="presentation"><Link to="/dist/">Home</Link></li>
                             <li role="presentation"><Link to="/dist/topscorer">Top Scorers</Link></li>
+                            <li role="presentation"><Link to="/dist/teams">Teams</Link></li>
                         </ul>
                     </div>
                 </div>
