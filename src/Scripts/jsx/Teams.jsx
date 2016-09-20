@@ -6,7 +6,8 @@ class Teams extends React.Component{
             seasons: ds.store.get("seasons") || new Immutable.Map(),
             curSeason: "",
             curLeague: "",
-            teams: new Immutable.Map()
+            teams: new Immutable.Map(),
+            searched: false
         };
         this.setState = this.setState.bind(this);
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
@@ -31,21 +32,24 @@ class Teams extends React.Component{
         this.setState({
              curLeague: e.target.value,
              curSeason: "",
-             teams: new Immutable.Map()
+             teams: new Immutable.Map(),
+             searched: false
         });
     }
     handleSeasonChange(e){
         this.setState({
             curSeason: e.target.value,
+            searched: false
         });
     }
     handleClick(){
         var da = new DataAccess();
         da.requestTeams(this.state.curLeague, this.state.curSeason);
+        this.setState({ searched: true });
     }
     render(){
         var key =(this.state.curLeague + "-" + this.state.curSeason);
-        var list = this.state.teams.get(key);
+        var list = this.state.teams.get(key) || new Immutable.List();
         return(
             <div>
                 <Menu />
@@ -79,18 +83,18 @@ class Teams extends React.Component{
                     }
                     <div>
                         {
-                            this.state.teams.size != 0 &&
-                            <div>
+                            list.size != 0 &&
+                            <ul>
                                 {
                                     list.map((ele) => {
                                         return(
-                                            <div>
-                                                <h2>{ele.name}</h2>
-                                            </div>
+                                            <li>
+                                                {ele.name}
+                                            </li>
                                         )
                                     })
                                 }
-                            </div>
+                            </ul>
                         }
                     </div>
                 </div>

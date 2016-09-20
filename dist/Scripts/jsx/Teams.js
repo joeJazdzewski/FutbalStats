@@ -21,7 +21,8 @@ var Teams = function (_React$Component) {
             seasons: ds.store.get("seasons") || new Immutable.Map(),
             curSeason: "",
             curLeague: "",
-            teams: new Immutable.Map()
+            teams: new Immutable.Map(),
+            searched: false
         };
         _this.setState = _this.setState.bind(_this);
         _this.handleLeagueChange = _this.handleLeagueChange.bind(_this);
@@ -53,14 +54,16 @@ var Teams = function (_React$Component) {
             this.setState({
                 curLeague: e.target.value,
                 curSeason: "",
-                teams: new Immutable.Map()
+                teams: new Immutable.Map(),
+                searched: false
             });
         }
     }, {
         key: "handleSeasonChange",
         value: function handleSeasonChange(e) {
             this.setState({
-                curSeason: e.target.value
+                curSeason: e.target.value,
+                searched: false
             });
         }
     }, {
@@ -68,12 +71,13 @@ var Teams = function (_React$Component) {
         value: function handleClick() {
             var da = new DataAccess();
             da.requestTeams(this.state.curLeague, this.state.curSeason);
+            this.setState({ searched: true });
         }
     }, {
         key: "render",
         value: function render() {
             var key = this.state.curLeague + "-" + this.state.curSeason;
-            var list = this.state.teams.get(key);
+            var list = this.state.teams.get(key) || new Immutable.List();
             return React.createElement(
                 "div",
                 null,
@@ -121,18 +125,14 @@ var Teams = function (_React$Component) {
                     React.createElement(
                         "div",
                         null,
-                        this.state.teams.size != 0 && React.createElement(
-                            "div",
+                        list.size != 0 && React.createElement(
+                            "ul",
                             null,
                             list.map(function (ele) {
                                 return React.createElement(
-                                    "div",
+                                    "li",
                                     null,
-                                    React.createElement(
-                                        "h2",
-                                        null,
-                                        ele.name
-                                    )
+                                    ele.name
                                 );
                             })
                         )

@@ -7,7 +7,8 @@ class TopScorer extends React.Component {
             seas: ds.store.get("seasons"),
             curSeason: "",
             curLeague: "",
-            topScorers: new Immutable.Map()
+            topScorers: new Immutable.Map(),
+            searched: false
         };
         this.setState = this.setState.bind(this);
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
@@ -31,21 +32,24 @@ class TopScorer extends React.Component {
         this.setState({
              curLeague: e.target.value,
              curSeason: "",
-             topScorers: new Immutable.Map()
+             topScorers: new Immutable.Map(),
+             searched: false
         });
     }
     handleSeasonChange(e){
         this.setState({
             curSeason: e.target.value,
+            searched: false
         });
     }
     handleClick(){
         var da = new DataAccess();
         da.requestTopScorer(this.state.curLeague, this.state.curSeason);
+        this.setState({ searched: true });    
     }
     render(){
         var key =(this.state.curLeague + "-" + this.state.curSeason);
-        var list = this.state.topScorers.get(key);
+        var list = this.state.topScorers.get(key) || new Immutable.List();
         return(
             <div>
                 <Menu />
@@ -79,7 +83,7 @@ class TopScorer extends React.Component {
                     }
                     <div>
                         {
-                            this.state.topScorers.size != 0 &&
+                            list.size != 0 &&
                             <div>
                                 {
                                     list.map((ele) => {
@@ -95,6 +99,12 @@ class TopScorer extends React.Component {
                                         )
                                     })
                                 }
+                            </div>
+                        }
+                        {
+                            list.size == 0 && this.state.searched &&
+                            <div>
+                                No results were found
                             </div>
                         }
                     </div>

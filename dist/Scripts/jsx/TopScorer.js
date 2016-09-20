@@ -22,7 +22,8 @@ var TopScorer = function (_React$Component) {
             seas: ds.store.get("seasons"),
             curSeason: "",
             curLeague: "",
-            topScorers: new Immutable.Map()
+            topScorers: new Immutable.Map(),
+            searched: false
         };
         _this.setState = _this.setState.bind(_this);
         _this.handleLeagueChange = _this.handleLeagueChange.bind(_this);
@@ -54,14 +55,16 @@ var TopScorer = function (_React$Component) {
             this.setState({
                 curLeague: e.target.value,
                 curSeason: "",
-                topScorers: new Immutable.Map()
+                topScorers: new Immutable.Map(),
+                searched: false
             });
         }
     }, {
         key: "handleSeasonChange",
         value: function handleSeasonChange(e) {
             this.setState({
-                curSeason: e.target.value
+                curSeason: e.target.value,
+                searched: false
             });
         }
     }, {
@@ -69,12 +72,13 @@ var TopScorer = function (_React$Component) {
         value: function handleClick() {
             var da = new DataAccess();
             da.requestTopScorer(this.state.curLeague, this.state.curSeason);
+            this.setState({ searched: true });
         }
     }, {
         key: "render",
         value: function render() {
             var key = this.state.curLeague + "-" + this.state.curSeason;
-            var list = this.state.topScorers.get(key);
+            var list = this.state.topScorers.get(key) || new Immutable.List();
             return React.createElement(
                 "div",
                 null,
@@ -122,7 +126,7 @@ var TopScorer = function (_React$Component) {
                     React.createElement(
                         "div",
                         null,
-                        this.state.topScorers.size != 0 && React.createElement(
+                        list.size != 0 && React.createElement(
                             "div",
                             null,
                             list.map(function (ele) {
@@ -172,6 +176,11 @@ var TopScorer = function (_React$Component) {
                                     React.createElement("br", null)
                                 );
                             })
+                        ),
+                        list.size == 0 && this.state.searched && React.createElement(
+                            "div",
+                            null,
+                            "No results were found"
                         )
                     )
                 )
